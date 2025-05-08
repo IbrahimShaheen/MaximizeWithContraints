@@ -3,57 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
-
-# def proportional_to_dps(vars):
-#     damage, crit_chan, crit_bonus, atk_spd, multi_strike = vars
-#     return (
-#         -(7.37 + 0.005 * damage)
-#         * (1.3 + 0.005 * crit_chan)
-#         * (1.3 + 0.005 * crit_bonus)
-#         * (1.3 + 0.002 * atk_spd)
-#         * (1.3 + 0.002 * multi_strike)
-#     )
-
-
-
-# def proportional_to_dps(vars):
-#     damage, crit_chan, crit_bonus, atk_spd, multi_strike = vars
-#     return (
-#         -(10 + .01 * damage)
-#         * (8 + .02 * crit_chan)
-#         * (6 + .03 * crit_bonus)
-#         * (4 + .04 * atk_spd)
-#         * (2 + .05 * multi_strike)
-#     )
-
-
-
-# def function_to_maximize(vars):
-#     x1, x2, x3, x4, x5 = vars
-#     return (
-#         -(10 + .01 * x1)
-#         * (8 + .02 * x2)
-#         * (6 + .03 * x3)
-#         * (4 + .04 * x4)
-#         * (2 + .05 * x5)
-#     )
-
-
-# def function_to_maximize(initial_factor_values, vars):
-#     damage, crit_chan, crit_bonus, atk_spd, multi_strike = vars
-    
-#     (7.97, 1.3, 1.3, 1.3, 1.3) = initial_factor_values
-#     init_damage, init_crit_chance, init_crit_bon, init_ats, init_multi = initial_factor_values
-#     return (
-#         -(init_damage + 0.005 * damage)
-#         * (init_crit_chance + 0.005 * crit_chan)
-#         * (init_crit_bon + 0.005 * crit_bonus)
-#         * (init_ats + 0.002 * atk_spd)
-#         * (init_multi + 0.002 * multi_strike)
-#     )
-
-
-
     
 def main():
     data = []
@@ -73,14 +22,14 @@ def main():
         bottom += data[:, i]
         
      
-        height = bar.get_height()
-        plt.text(
-            bar.get_x() + bar.get_width() / 2,
-            height,
-            str(height),
-            ha='center',
-            va='bottom'
-        )
+        # height = bar.get_height()
+        # plt.text(
+        #     bar.get_x() + bar.get_width() / 2,
+        #     height,
+        #     str(height),
+        #     ha='center',
+        #     va='bottom'
+        # )
 
 
     plt.xticks(x, labels)
@@ -94,7 +43,7 @@ def main():
 
 
 
-def function_to_maximize(initial_factor_values, vars):
+def function_to_maximize(vars):
     damage, crit_chan, crit_bonus, atk_spd, multi_strike = vars
     
     base_factor_values = [2, 1.3, 1.3, 1.3, 1.3]
@@ -102,8 +51,11 @@ def function_to_maximize(initial_factor_values, vars):
         5.97,  # duelist spark
         0,
         0,
-        0.6,
-        ]
+        0.6, # gloves
+        0.6, # ring
+    ]
+    
+    initial_factor_values = [0] * len(base_factor_values)
     for i in range(len(base_factor_values)):
         initial_factor_values[i] = base_factor_values[i] + equipment_factor_values[i]
     
@@ -112,7 +64,7 @@ def function_to_maximize(initial_factor_values, vars):
         * (initial_factor_values[1] + 0.005 * crit_chan)
         * (initial_factor_values[2] + 0.005 * crit_bonus)
         * (initial_factor_values[3] + 0.002 * atk_spd)
-        * (initial_factor_values[5] + 0.002 * multi_strike)
+        * (initial_factor_values[4] + 0.002 * multi_strike)
     )
     
     

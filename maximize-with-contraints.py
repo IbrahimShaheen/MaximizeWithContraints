@@ -9,15 +9,15 @@ import time
 
 FACTORS = ["damage", "crit_chan", "crit_bon", "atk_spd", "multi", "force"]
 
-step_size = 25
-shards = 2019
+step_size = 50
+shards = 2270
 c = [.01, .005, .005, .002, .002, .01]
 base_factor_values = [2, 1.3, 1.3, 1.3, 1.3, 1.5]
-base_artificial_weights = [1, 1, 1, 0.8, 0.8, 0]
+base_artificial_weights = [1, 1, 1, 1, 1, 1]
 
 equipment_factor_values = [
     #damage
-    7,
+    6.5,
     
     #crit chance
     0,
@@ -32,7 +32,7 @@ equipment_factor_values = [
     0,
     
     #force
-    0,
+    1.5,
 ]
     
 
@@ -85,7 +85,7 @@ def main():
     filename = f"{int(time.time())}.png"
     relative_path = os.path.join(relative_dir, filename)
     plt.savefig(relative_path)
-    plt.show()
+    # plt.show()
 
 
 

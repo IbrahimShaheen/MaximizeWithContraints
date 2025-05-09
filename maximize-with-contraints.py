@@ -9,15 +9,15 @@ import time
 
 FACTORS = ["damage", "crit_chan", "crit_bon", "atk_spd", "multi", "force"]
 
-step_size = 100
-shards = 5517
+step_size = 25
+shards = 2019
 c = [.01, .005, .005, .002, .002, .01]
 base_factor_values = [2, 1.3, 1.3, 1.3, 1.3, 1.5]
-base_artificial_weights = [1, 1, 1, 1, 0.5, 0.1]
+base_artificial_weights = [1, 1, 1, 0.8, 0.8, 0]
 
 equipment_factor_values = [
     #damage
-    5.97,
+    7,
     
     #crit chance
     0,
@@ -26,13 +26,13 @@ equipment_factor_values = [
     0,
     
     #atk spd
-    0.6,
+    0,
     
     #multi
     0,
     
     #force
-    0, # visor
+    0,
 ]
     
 
@@ -40,7 +40,11 @@ def main():
     data = []
     
     for i in range(0, int(shards / step_size) + 1):
-        data.append(get_optimal_allocation(function_to_maximize, i * step_size)[0])
+        curr_result = get_optimal_allocation(function_to_maximize, i * step_size)
+        arr = curr_result[0]
+        normalized = arr / np.linalg.norm(arr)
+        result = -1 * normalized * curr_result[1].fun
+        data.append(result)
         
         
     data = np.array(data)
@@ -70,7 +74,7 @@ def main():
                 
                 base_artificial_weights = {np.array(base_artificial_weights)}
                 equipment_factor_values = {np.array(equipment_factor_values).round(2)}
-                Max_val = {-shards_result.fun} optimal_values = {shards_result.x.round(0)}
+                Max_val = {-shards_result.fun.round(4)} optimal_values = {shards_result.x.round(0)}
                 PRECENTS = {np.array(optimal_percent)}
                 ''')
     plt.legend()

@@ -3,33 +3,37 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
+import os
+import time
 
 
 FACTORS = ["damage", "crit_chan", "crit_bon", "atk_spd", "multi", "force"]
 
-step_size = 100
+step_size = 50
 shards = 2517
 c = [.01, .005, .005, .002, .002, .01]
 base_factor_values = [2, 1.3, 1.3, 1.3, 1.3, 1.5]
-base_artificial_weights = [1, 1, 1, 0.8, 0.8, 0]
+base_artificial_weights = [1, 1, 1, 1, 0, 0]
 
 equipment_factor_values = [
-    7.97,# duelist spark and visor
-    1.0,#cc_garment
-    1.0,#cb_garment
-    0, #spd gloves
-    0.6, #multigloves
-    2, # visor
+    #damage
+    5.97,
+    
+    #crit chance
+    0,
+    
+    #crit bonus
+    0,
+    
+    #atk spd
+    0.6,
+    
+    #multi
+    0,
+    
+    #force
+    0, # visor
 ]
-
-# equipment_factor_values = [
-#     5.97,# duelist spark
-#     1,#ccring
-#     1,#cbring
-#     .5,#crown wind
-#     .6, #multigloves
-#     0,
-# ]
     
 
 def main():
@@ -43,6 +47,9 @@ def main():
 
     x = np.arange(data.shape[0])
     labels = [f"{i * step_size}" for i in range(0, len(data))]
+
+    plt.rcParams['figure.figsize'] = (25.6, 14.4)
+    plt.rcParams['figure.dpi'] = 100
 
     bottom = np.zeros(data.shape[0])
     for i in range(data.shape[1]):
@@ -59,17 +66,22 @@ def main():
     plt.xlabel(f'''Resource allocation ({step_size})
                Resources points are allocated to each factor in order to maximize Y = K * [product of (m_i*x_i+c_i) for i..n] + B''')
     plt.title(f'''
-                factors = {np.array(FACTORS)}
-                Max_val = {-shards_result.fun} optimal_values = {shards_result.x.round(0)}
-                equipment_factor_values = {np.array(equipment_factor_values).round(2)}
-                c = {np.array(c)}
+                factors = {np.array(FACTORS)}, base_factor_values = {np.array(base_factor_values)}, c = {np.array(c)}
+                
                 base_artificial_weights = {np.array(base_artificial_weights)}
-                base_factor_values = {np.array(base_factor_values)}
+                equipment_factor_values = {np.array(equipment_factor_values).round(2)}
+                Max_val = {-shards_result.fun} optimal_values = {shards_result.x.round(0)}
                 PRECENTS = {np.array(optimal_percent)}
                 ''')
     plt.legend()
-    plt.show()   
     
+    # Create relative directory if it doesn't exist
+    relative_dir = "example_runs"
+    os.makedirs(relative_dir, exist_ok=True)
+    filename = f"{int(time.time())}.png"
+    relative_path = os.path.join(relative_dir, filename)
+    plt.savefig(relative_path)
+    plt.show()
 
 
 

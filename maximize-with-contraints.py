@@ -17,7 +17,7 @@ base_artificial_weights = [1, 1, 1, 1, 1, 1]
 
 equipment_factor_values = [
     #damage
-    6.5,
+    5,
     
     #crit chance
     0,
@@ -32,7 +32,7 @@ equipment_factor_values = [
     0,
     
     #force
-    1.5,
+    0,
 ]
     
 

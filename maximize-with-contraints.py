@@ -9,21 +9,21 @@ import time
 
 FACTORS = ["damage", "crit_chan", "crit_bon", "atk_spd", "multi", "force"]
 
-step_size = 50
-shards = 2270
+step_size = 100
+shards = 2000
 c = [.01, .005, .005, .002, .002, .01]
 base_factor_values = [2, 1.3, 1.3, 1.3, 1.3, 1.5]
-base_artificial_weights = [1, 1, 1, 1, 1, 1]
+base_artificial_weights = [0.5, 1, 1, 1, 1, 0.5]
 
 equipment_factor_values = [
     #damage
-    5,
+    7.5,
     
     #crit chance
-    0,
+    1,
     
     #crit bonus
-    0,
+    1,
     
     #atk spd
     0,
@@ -32,7 +32,7 @@ equipment_factor_values = [
     0,
     
     #force
-    0,
+    1.5,
 ]
     
 
